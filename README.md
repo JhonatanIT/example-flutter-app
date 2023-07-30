@@ -14,3 +14,15 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Generate artefact
+Run the following codes depending on the OS:
+ - Android
+
+        flutter build apk --split-per-abi
+
+
+## Install an APK on a device
+
+    flutter build apk
+    flutter install
