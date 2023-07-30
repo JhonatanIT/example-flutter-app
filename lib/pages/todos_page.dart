@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:example_app/database/todo_db.dart';
 import 'package:example_app/widget/e_todo_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,8 @@ class _TodosPageState extends State<TodosPage> {
   @override
   void initState() {
     super.initState();
+    insertInitialData();
+    //sleep(const Duration(seconds: 1)); //wait for initial data
     fetchTodos();
   }
 
@@ -25,6 +29,10 @@ class _TodosPageState extends State<TodosPage> {
     setState(() {
       futureTodos = todoDB.fetchAll();
     });
+  }
+
+  void insertInitialData() async {
+    await todoDB.insertInitialDataFromCSV();
   }
 
   @override

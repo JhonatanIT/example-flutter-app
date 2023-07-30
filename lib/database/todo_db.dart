@@ -1,3 +1,5 @@
+import 'package:csv/csv.dart';
+import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:example_app/database/database_service.dart';
 import 'package:example_app/model/todo.dart';
@@ -13,6 +15,29 @@ class TodoDB {
         "updated_at" INTEGER,
         PRIMARY KEY ("id" AUTOINCREMENT)
     );""");
+  }
+
+  Future<void> insertInitialDataFromCSV() async {
+    //Load initial data from csv
+    final _rawData = await rootBundle.loadString("assets/mycsv.csv");
+    List<List<dynamic>> _listData =
+        const CsvToListConverter().convert(_rawData);
+
+    final database = await DatabaseService().database;
+    final todos = await database.rawQuery("""SELECT * FROM $tableName""");
+
+    //The first time the database is created
+    if (todos.isEmpty) {
+      //print("Load initial data ...");
+      for (var todo in _listData) {
+        //No headers
+        if (todo[1] != "title") {
+          await database.rawInsert(
+              """INSERT INTO $tableName (title, created_at) VALUES (?,?)""",
+              [todo[1], DateTime.now().millisecondsSinceEpoch]);
+        }
+      }
+    }
   }
 
   Future<int> create({required String title}) async {
@@ -53,6 +78,7 @@ class TodoDB {
 
   Future<void> delete(int id) async {
     final database = await DatabaseService().database;
-    await database.rawDelete("""DELETE FROM $tableName WHERE id = ?""", [id]);
+    //await database.rawDelete("""DELETE FROM $tableName WHERE id = ?""", [id]);
+    await database.delete(tableName, where: "id = ?", whereArgs: [id]);
   }
 }
