@@ -28,7 +28,6 @@ class TodoDB {
 
     //The first time the database is created
     if (todos.isEmpty) {
-      //print("Load initial data ...");
       for (var todo in _listData) {
         //No headers
         if (todo[1] != "title") {
@@ -52,6 +51,25 @@ class TodoDB {
     final todos = await database.rawQuery(
         """SELECT * FROM $tableName  ORDER BY COALESCE(updated_at, created_at)""");
     return todos.map((todo) => Todo.fromSqfliteDatabase(todo)).toList();
+  }
+
+  // A method that retrieves all the todos from the todo table.
+  Future<List<Todo>> todos() async {
+    // Get a reference to the database.
+    final database = await DatabaseService().database;
+
+    // Query the table for all Todos.
+    final List<Map<String, dynamic>> maps = await database.query('$tableName');
+
+    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    return List.generate(maps.length, (i) {
+      return Todo(
+        id: maps[i]['id'],
+        title: maps[i]['title'],
+        createdAt: maps[i]['created_at'],
+        updatedAt: maps[i]['updated_at'],
+      );
+    });
   }
 
   Future<Todo> fetchById(int id) async {

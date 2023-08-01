@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:example_app/database/todo_db.dart';
 import 'package:example_app/widget/e_todo_widget.dart';
 import 'package:flutter/material.dart';
@@ -39,10 +37,49 @@ class _TodosPageState extends State<TodosPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final drawerHeader = UserAccountsDrawerHeader(
+      accountName: Text(
+        "Jhonatan Ibanez",
+      ),
+      accountEmail: Text(
+        "jhonatan.ibatac@gmail.com",
+      ),
+      currentAccountPicture: const CircleAvatar(
+        child: FlutterLogo(size: 42.0),
+      ),
+    );
+
+    final drawerItems = ListView(
+      children: [
+        drawerHeader,
+        ListTile(
+          title: Text(
+            "Export",
+          ),
+          leading: const Icon(Icons.import_export),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          title: Text(
+            "Infographic",
+          ),
+          leading: const Icon(Icons.photo),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('ToDo List'),
+      ),
+      drawer: Drawer(
+        child: drawerItems,
       ),
       body: FutureBuilder<List<Todo>>(
         future: futureTodos,

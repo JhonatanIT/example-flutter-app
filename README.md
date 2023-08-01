@@ -15,6 +15,18 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## Add permission
+* Add **permission_handler** in the **pubspec.yaml** file
+* Add the permissions in the **AndroidManifest.xml** file, for example:
+
+        <uses-permission android:name="android.permission.WRITE_EXTER*NAL_STORAGE" />
+* Request the permission in your code, for instance:
+
+        if (await Permission.storage.request().isGranted) {
+            ...
+        } else {
+            Map<Permission, PermissionStatus> statuses = await [Permission.storage].request();
+        }
 ## Generate artefact
 Run the following codes depending on the OS:
  - Android
