@@ -53,6 +53,7 @@ class _TodosPageState extends State<TodosPage> {
       ),
       currentAccountPicture: const CircleAvatar(
         child: FlutterLogo(size: 42.0),
+        //backgroundImage: AssetImage('assets/teQuieroMucho.jpg'),
       ),
     );
 
@@ -76,8 +77,21 @@ class _TodosPageState extends State<TodosPage> {
             "Infographic",
           ),
           leading: const Icon(Icons.photo),
-          onTap: () {
-            Navigator.pop(context);
+          onTap: () async {
+            await showDialog(
+              context: context,
+              builder: (_) => Dialog(
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/teQuieroMucho.jpg'),
+                          fit: BoxFit.fill)),
+                ),
+              ),
+            );
+            //Navigator.pop(context);
           },
         ),
       ],
