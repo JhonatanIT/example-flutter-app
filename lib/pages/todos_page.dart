@@ -221,7 +221,7 @@ class _TodosPageState extends State<TodosPage> {
 
       // convert rows to String and write as csv file
       String csv = const ListToCsvConverter().convert(exportData);
-      file.writeAsString(csv);
+      file.writeAsString(csv, mode: FileMode.write);
 
       //TODO No work: alternative method to download
       //_launchUrl();

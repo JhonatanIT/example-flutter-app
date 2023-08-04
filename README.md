@@ -38,3 +38,16 @@ Run the following codes depending on the OS:
 
     flutter build apk
     flutter install
+
+## Change icon
+
+* Add **flutter_launcher_icons** in **pubspec.yaml** file and configure:
+
+        flutter_launcher_icons:
+            android: true
+            ios: true
+            image_path: "assets/icon.png"
+* Run the following commands
+
+        flutter pub get
+        flutter pub run flutter_launcher_icons
