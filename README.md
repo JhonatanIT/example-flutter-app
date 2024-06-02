@@ -51,3 +51,8 @@ Run the following codes depending on the OS:
 
         flutter pub get
         flutter pub run flutter_launcher_icons
+
+
+## Update Dart SDK
+
+    flutter upgrade
